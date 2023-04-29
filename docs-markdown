@@ -1,0 +1,84 @@
+## Documentation in Markdown
+
+# ERC20 Token Transfer Utility
+
+This utility allows you to transfer all ERC20 tokens from a wallet to a specified destination address. It does so by first fetching the transfer history of the wallet and then transferring the tokens to the destination address.
+
+## Prerequisites
+
+To use this utility, you'll need to install the following packages:
+
+1. `web3` - A JavaScript library that enables interaction with the Ethereum blockchain.
+2. `ethereumjs-tx` - A library to build and sign Ethereum transactions.
+
+Install them with the following command:
+
+```bash
+npm install web3 ethereumjs-tx
+```
+
+## Code Overview
+
+### Imports and Constants
+
+First, import the required libraries and set up the constants.
+
+```javascript
+const Web3 = require('web3');
+const Tx = require('ethereumjs-tx').Transaction;
+
+const web3 = new Web3('https://mainnet.infura.io/v3/your_project_id');
+
+const WALLET_ADDRESS = '0x123...';
+const WALLET_PRIVATE_KEY = Buffer.from('your_wallet_private_key', 'hex');
+const DESTINATION_ADDRESS = '0x456...';
+```
+
+### Functions
+
+#### getERC20TokenTransferHistory(walletAddress)
+
+This function fetches the transfer history for the given wallet address. It returns an object containing an array of transfer objects and a dictionary of token contracts.
+
+#### getTokenBalance(tokenContractAddress, walletAddress)
+
+This function retrieves the token balance for the given wallet address and token contract address. It returns the balance as a BigNumber.
+
+#### getTokenData(tokenContractAddress)
+
+This function retrieves the token data (name, symbol, decimals, total supply, and contract address) for the given token contract address. It also checks if the token contract adheres to the ERC20 standard. The data is returned as an object.
+
+#### transferToken(tokenContractAddress, walletPrivateKey, destinationAddress)
+
+This function transfers tokens from the wallet to the destination address. It does so by creating and signing a transaction with the provided private key and sending it to the Ethereum network.
+
+#### transferAllTokensToDestination(walletAddress, walletPrivateKey, destinationAddress)
+
+This function transfers all ERC20 tokens from the wallet address to the destination address. It does so by first fetching the transfer history and then transferring the tokens using the `transferToken()` function.
+
+### Execution
+
+To execute the transfer of all ERC20 tokens from the wallet to the destination address, call the `transferAllTokensToDestination()` function with the required parameters.
+
+```javascript
+transferAllTokensToDestination(
+  WALLET_ADDRESS,
+  WALLET_PRIVATE_KEY,
+  DESTINATION_ADDRESS
+);
+```
+
+## Usage
+
+To use this utility, replace the following placeholders with your information:
+
+- `your_project_id`: Replace with your Infura project ID.
+- `your_wallet_private_key`: Replace with your Ethereum wallet's private key.
+- `0x123...`: Replace with your Ethereum wallet address.
+- `0x456...`: Replace with the destination Ethereum address.
+
+Then, run the script with Node.js:
+
+```bash
+node transfer_tokens.js
+```
